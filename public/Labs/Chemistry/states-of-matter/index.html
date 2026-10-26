@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./img/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>States of Matter Simulation</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <div id="root">
+      <div class="dashboard-layout">
+        <div class="main-content-grid">
+          
+          <!-- LEFT SIDEBAR -->
+          <aside class="left-sidebar">
+            <div class="sidebar-section">
+              <h3>States of Matter</h3>
+              <p class="sidebar-desc">Investigate how temperature changes affect the state of a substance.</p>
+            </div>
+            
+            <div class="substance-list" id="substanceList">
+              <!-- Substance items injected by app.js -->
+            </div>
+
+            <div class="did-you-know card">
+              <h4>💡 Did you know?</h4>
+              <p>The same substance can exist in all three states — solid, liquid, and gas — depending on temperature and pressure.</p>
+            </div>
+          </aside>
+
+          <!-- CENTER DASHBOARD -->
+          <main class="center-panel">
+            <div class="experiment-card card">
+              <div class="exp-header">
+                <div>
+                  <h2 id="expTitle">Experiment: Water</h2>
+                  <p>Heat or cool the substance and observe how particles behave.</p>
+                </div>
+                <div class="view-toggles" id="viewToggles">
+                  <button id="btnNormalView" class="active">Normal View</button>
+                  <button id="btnParticleView">Particle View</button>
+                </div>
+              </div>
+
+              <div class="hotplate-area">
+                <!-- Thermometer Widget -->
+                <div class="thermometer-widget">
+                  <div class="thermometer-title">Temperature</div>
+                  <div class="thermometer-body">
+                    <div class="therm-glass">
+                      <div id="thermFluid" class="therm-fluid" style="height: 0%"></div>
+                    </div>
+                  </div>
+                  <div id="thermValue" class="therm-value">20°C</div>
+                  <div id="thermLabel" class="therm-label">Liquid range</div>
+                </div>
+
+                <!-- Central Visualization -->
+                <div class="beaker-display">
+                  <div id="frostOverlay" class="frost-overlay" style="display: none;"></div>
+                  
+                  <div class="beaker-container">
+                    <canvas id="simCanvas" width="220" height="220" style="position: absolute; bottom: 5px; z-index: 10; transform-origin: center 75%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); display: none;"></canvas>
+                    
+                    <div id="normalFluid" class="normal-fluid liquid">
+                      <div id="normalLabel" class="normal-label" style="z-index: 12">Water</div>
+                      <div id="gasParticles" class="gas-particles" style="display: none;"></div>
+                    </div>
+                  </div>
+                  
+                  <div id="iceContainer" style="position: absolute; bottom: 165px; left: 50%; transform: translateX(-50%); z-index: 10; pointer-events: none; display: none;">
+                    <img src="./img/ice-cubes-white.jpg" alt="Ice Cubes" style="width: 180px; mix-blend-mode: multiply; opacity: 0.95" />
+                  </div>
+                  
+                  <div class="stove-base">
+                    <img src="./img/gas-stove.jpg" alt="Gas Stove" class="stove-image" />
+                    
+                    <div id="flamesContainer" style="display: none;">
+                      <div class="gas-flame left-flame"></div>
+                      <div class="gas-flame right-flame"></div>
+                    </div>
+                    
+                    <div class="stove-controls">
+                      <button id="btnCool" class="plate-btn cool">❄️ Cool</button>
+                      <button id="btnHeat" class="plate-btn heat">🔥 Heat</button>
+                    </div>
+                    <div id="heatIndicator" class="heat-indicator"></div>
+                  </div>
+                </div>
+
+                <!-- State Info & Try This -->
+                <div class="status-widgets">
+                  <div class="current-state-card">
+                    <div class="state-label">Current State</div>
+                    <h3 id="stateTitle" class="state-title">LIQUID</h3>
+                    <p id="stateDesc" class="state-desc">Particles are close in a takes container shape arrangement.</p>
+                  </div>
+                  <div class="try-this-card">
+                    <h4>💡 Try this:</h4>
+                    <p>Increase the temperature to see what happens!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOTTOM CONTROLS & GRAPH -->
+            <div class="bottom-controls">
+              <div class="slider-card card">
+                <h3>🌡️ Temperature Control</h3>
+                <div class="slider-wrapper">
+                  <span>❄️</span>
+                  <div class="slider-container" style="flex: 1; position: relative">
+                    <input type="range" id="tempSlider" class="modern-slider" style="width: 100%; margin: 0" />
+                    <div class="temp-markers" id="tempMarkers">
+                      <!-- Markers injected by app.js -->
+                    </div>
+                  </div>
+                  <span>🔥</span>
+                  <div id="tempDisplayBox" class="temp-display-box">20 °C</div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+          <!-- RIGHT SIDEBAR -->
+          <aside class="right-panel">
+            <div class="readings-card card">
+              <h3>📊 Lab readings</h3>
+              <div class="reading-grid">
+                <div class="r-item"><span>Particle motion</span><strong id="readMotion">Medium</strong></div>
+                <div class="r-item"><span>Spacing</span><strong id="readSpacing">Close</strong></div>
+                <div class="r-item"><span>Shape</span><strong id="readShape">Takes container shape</strong></div>
+                <div class="r-item"><span>Volume</span><strong id="readVolume">Fixed</strong></div>
+              </div>
+            </div>
+
+            <div class="explanation-card card">
+              <h3>👁️ What's happening?</h3>
+              <p id="explanationText"></p>
+            </div>
+
+            <div class="examples-card card">
+              <h3>🌍 Real-life examples</h3>
+              <div class="example-chain">
+                <div class="ex-item">
+                  <div class="ex-icon">🧊</div>
+                  <span id="exSolid">Ice</span>
+                </div>
+                <div class="ex-arrow">▶</div>
+                <div class="ex-item">
+                  <div class="ex-icon">💧</div>
+                  <span id="exLiquid">Water</span>
+                </div>
+                <div class="ex-arrow">▶</div>
+                <div class="ex-item">
+                  <div class="ex-icon">💨</div>
+                  <span id="exGas">Steam</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </div>
+    
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhysicsLab — Newton's Laws & Motion Simulator (Class 9–10)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+<!-- ================================================================= -->
+<!-- INTRODUCTORY LESSON MODAL (Newton's 3rd Law: Action & Reaction)   -->
+<!-- ================================================================= -->
+<div id="videoLandingOverlay" class="landing-overlay" role="dialog" aria-modal="true" aria-label="Introductory Lesson">
+  <div class="landing-content">
+    <div class="landing-top-bar">
+      <div class="landing-brand">
+        <span class="landing-brand-icon">🚀</span>
+        <span>PhysicsLab <span style="font-size:13px; font-weight:500; color:#94a3b8;">| Class 9–10 Physics</span></span>
+      </div>
+      <button class="landing-skip-btn" id="btnSkipToLab" title="Enter the interactive simulation">Enter Physics Lab &rarr;</button>
+    </div>
+
+    <div class="landing-header">
+      <div class="landing-topic-badge">Newton's Third Law of Motion</div>
+      <h1 class="landing-title">Why Do Rockets Fly into Space?</h1>
+      <p class="landing-desc">
+        Rockets don't push against the ground or air! Burning fuel pushes hot exhaust gas <b>downwards</b> with tremendous force (<b>Action</b>), which creates an equal and opposite force pushing the rocket <b>upwards</b> (<b>Reaction</b>).
+      </p>
+    </div>
+
+    <div class="landing-theater">
+      <div class="landing-video-wrapper">
+        <video id="introVideo" playsinline preload="auto" controls>
+          <source src="rocet.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="landing-explainer-grid">
+        <div class="landing-explainer-card action-card">
+          <div class="explainer-icon">🔻</div>
+          <div class="explainer-info">
+            <div class="explainer-title">1. The Action Force (F<sub>action</sub>)</div>
+            <p class="explainer-p">High-speed burning exhaust gas is expelled downwards through the nozzle.</p>
+          </div>
+        </div>
+        <div class="landing-explainer-card reaction-card">
+          <div class="explainer-icon">🔺</div>
+          <div class="explainer-info">
+            <div class="explainer-title">2. The Reaction Force (F<sub>thrust</sub>)</div>
+            <p class="explainer-p">By Newton's 3rd Law, an equal and opposite upward thrust propels the rocket into the sky!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="landing-footer-actions">
+        <button id="btnEnterLab" class="landing-cta-btn">Start Exploring the Physics Lab &rarr;</button>
+        <button id="btnReplayVideo" class="landing-secondary-btn">↺ Replay Lesson</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================= -->
+<!-- MAIN APPLICATION HEADER                                           -->
+<!-- ================================================================= -->
+<header class="app-header">
+  <div class="header-container">
+    <div class="brand-wrapper">
+      <div class="brand-icon">🚀</div>
+      <div>
+        <div style="display:flex; align-items:center;">
+          <h1 class="brand-title">PhysicsLab</h1>
+          <span class="brand-tag">Class 9–10</span>
+        </div>
+        <div class="brand-sub">Newton's Laws of Motion, Gravity &amp; Acceleration</div>
+      </div>
+    </div>
+
+    <!-- Mode Switcher: Simple Lab vs Data & Graphs -->
+    <div class="mode-tabs">
+      <button id="tabSimple" class="mode-tab active" title="Student-friendly interactive rocket lab">
+        <span>🚀</span> Simple Lab
+      </button>
+      <button id="tabAdvanced" class="mode-tab" title="Detailed telemetry curves and atmosphere layers">
+        <span>📊</span> Data &amp; Graphs
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <button id="btnOpenIntroVideo" class="btn-header-action btn-header-video">
+        <span>🎬</span> Watch Video Lesson
+      </button>
+      <button id="btnResetDefaults" class="btn-header-action" title="Reset all settings to default">
+        <span>🔄</span> Reset All
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================================================================= -->
+<!-- MAIN INTERACTIVE CONTENT AREA                                     -->
+<!-- ================================================================= -->
+<main class="lab-content-area">
+
+  <!-- ========================================== -->
+  <!-- 1. SIMPLE LAB VIEW (Default for Students)   -->
+  <!-- ========================================== -->
+  <div id="simpleLabView">
+    <div class="two-col-grid">
+      
+      <!-- LEFT COLUMN: ROCKET CANVAS & TEACHER CARD -->
+      <div class="stage-column">
+        <div class="stage-card">
+          <!-- Toolbar with Clean Toggles -->
+          <div class="stage-toolbar">
+            <span id="simStatus" class="stage-status-badge">READY</span>
+            <div class="toggle-group">
+              <label class="check-label">
+                <input type="checkbox" id="chkForces" checked> Force Arrows
+              </label>
+              <label class="check-label">
+                <input type="checkbox" id="chkValues" checked> Values (N)
+              </label>
+              <label class="check-label">
+                <input type="checkbox" id="chkReaction" checked> Exhaust (3rd Law)
+              </label>
+            </div>
+          </div>
+
+          <!-- The Canvas Stage -->
+          <div class="canvas-wrapper">
+            <canvas id="simCanvas"></canvas>
+          </div>
+
+          <!-- Big Tactile Playback Controls -->
+          <div class="stage-controls">
+            <div class="playback-btn-group">
+              <button id="btnPlay" class="btn-play">▶ Launch Rocket</button>
+              <button id="btnPause" class="btn-pause" disabled>⏸ Pause</button>
+              <button id="btnStep" class="btn-step" title="Advance 0.1s">⏭ 1 Step</button>
+              <button id="btnReset" class="btn-reset" title="Reset to launchpad">🔄 Reset</button>
+            </div>
+            <div class="sim-speed-selector">
+              <button class="speed-pill" data-speed="0.5">0.5x Slow</button>
+              <button class="speed-pill active" data-speed="1.0">1x Normal</button>
+              <button class="speed-pill" data-speed="2.0">2x Fast</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- "What's Happening?" Live Teacher Card (Plain English Class 10 Physics) -->
+        <div class="teacher-card">
+          <div class="teacher-header">
+            <span id="lawBadge" class="teacher-badge">⚡ Newton's 2nd Law: Unbalanced Force</span>
+            <span style="font-size:12.5px; color:var(--text-muted); font-weight:600;">Live Concept Explainer</span>
+          </div>
+          <div id="lawExplanation" class="teacher-summary">
+            Thrust exceeds weight! The upward force is greater than the downward gravity, causing the rocket to accelerate into the sky.
+          </div>
+          <div class="teacher-steps-grid">
+            <div class="step-box">
+              <span class="step-label">1. Upward Thrust</span>
+              <span id="stepThrust" class="step-val green">40,000 N</span>
+              <span class="step-sub">Engine Power</span>
+            </div>
+            <div class="step-box">
+              <span class="step-label">2. Downward Weight</span>
+              <span id="stepWeight" class="step-val amber">29,400 N</span>
+              <span id="stepWeightSub" class="step-sub">m (3,000 kg) × g (9.8)</span>
+            </div>
+            <div class="step-box">
+              <span class="step-label">3. Net Force (Result)</span>
+              <span id="stepNet" class="step-val blue">+10,600 N</span>
+              <span id="stepAccel" class="step-sub">a = +3.53 m/s² upward</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: STUDENT CONTROLS -->
+      <div class="controls-column">
+        
+        <!-- CARD 1: ENGINE THRUST & LIVE FUEL TANK -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <h2 class="control-card-title"><span>🚀</span> Engine Thrust &amp; Fuel</h2>
+            <span id="outThrust" class="control-pill-val green">50,000 N</span>
+          </div>
+          <div class="slider-container">
+            <input type="range" id="slThrust" class="big-range-slider green-slider" min="0" max="100000" step="1000" value="50000">
+          </div>
+          <div class="preset-button-row">
+            <button id="btnThrustZero" class="btn-preset" title="Turn off rocket engines">Off (0 N)</button>
+            <button id="btnThrustHover" class="btn-preset" title="Equal to weight: Balanced forces (Hover)">Hover (⚖️)</button>
+            <button id="btnThrustLiftoff" class="btn-preset active" title="Blast off upward">Blast Off! 🚀</button>
+          </div>
+
+          <!-- Live Fuel Tank Gauge Bar -->
+          <div class="fuel-gauge-container">
+            <div class="fuel-gauge-header">
+              <span>⛽ Fuel Tank (<span id="fuelStatusText">Burning</span>)</span>
+              <span id="outFuel" style="font-family:var(--font-mono); font-weight:800; color:var(--thrust-hover);">100%</span>
+            </div>
+            <div class="fuel-track">
+              <div id="fuelBar" class="fuel-bar" style="width: 100%;"></div>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px; align-items:center; flex-wrap:wrap;">
+              <button id="btnFuelLow" class="btn-preset" style="padding:4px 8px; font-size:11.5px; min-width:unset;" title="Burns out in ~2.5s to demonstrate rapid free fall">⚡ Low Fuel (35%)</button>
+              <button id="btnFuelFull" class="btn-preset active" style="padding:4px 8px; font-size:11.5px; min-width:unset;" title="Standard 7s burn to see ascent, apex and free fall">⛽ Full Tank (100%)</button>
+              <label style="font-size:11.5px; font-weight:600; display:flex; align-items:center; gap:4px; margin-left:auto; cursor:pointer;">
+                <input type="checkbox" id="chkInfiniteFuel"> Infinite Fuel
+              </label>
+            </div>
+            <input type="range" id="slFuel" min="0" max="100" step="5" value="100" style="display:none;">
+          </div>
+        </div>
+
+        <!-- CARD 2: LAUNCH ANGLE (2D ARC TRAJECTORY) -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <h2 class="control-card-title"><span>📐</span> Launch Angle (2D Arc Trajectory)</h2>
+            <span id="outAngle" class="control-pill-val" style="color:var(--primary); background:var(--primary-light);">0° (Straight Up)</span>
+          </div>
+          <div class="slider-container">
+            <input type="range" id="slAngle" class="big-range-slider" min="-45" max="45" step="1" value="0">
+          </div>
+          <div class="preset-button-row">
+            <button id="btnAngleLeft" class="btn-preset" data-angle="-20" title="Tilt left 20 degrees">↶ Tilt Left (-20°)</button>
+            <button id="btnAngleZero" class="btn-preset active" data-angle="0" title="Launch straight up">⬆ Straight Up (0°)</button>
+            <button id="btnAngleRight" class="btn-preset" data-angle="20" title="Tilt right 20 degrees">↷ Tilt Right (+20°)</button>
+          </div>
+        </div>
+
+        <!-- CARD 3: ROCKET MASS -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <h2 class="control-card-title"><span>⚖️</span> Rocket Mass (How Heavy?)</h2>
+            <span id="outMass" class="control-pill-val amber">3,000 kg</span>
+          </div>
+          <div class="slider-container">
+            <input type="range" id="slMass" class="big-range-slider amber-slider" min="1000" max="6000" step="250" value="3000">
+          </div>
+          <div class="preset-button-row">
+            <button class="btn-preset" data-mass="1500">Light (1,500 kg)</button>
+            <button class="btn-preset active" data-mass="3000">Normal (3,000 kg)</button>
+            <button class="btn-preset" data-mass="5000">Heavy (5,000 kg)</button>
+          </div>
+        </div>
+
+        <!-- CARD 4: CHOOSE A PLANET / GRAVITY -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <h2 class="control-card-title"><span>🪐</span> Gravity &amp; Planet (W = m × g)</h2>
+            <span id="outGravity" class="control-pill-val">9.8 m/s²</span>
+          </div>
+          <div class="planet-grid">
+            <button class="planet-card-btn active" data-g="9.8">
+              <span class="planet-emoji">🌍</span>
+              <div>
+                <div class="planet-info-name">Earth</div>
+                <div class="planet-info-g">g = 9.8 m/s²</div>
+              </div>
+            </button>
+            <button class="planet-card-btn" data-g="1.6">
+              <span class="planet-emoji">🌕</span>
+              <div>
+                <div class="planet-info-name">Moon</div>
+                <div class="planet-info-g">g = 1.6 m/s²</div>
+              </div>
+            </button>
+            <button class="planet-card-btn" data-g="3.7">
+              <span class="planet-emoji">🔴</span>
+              <div>
+                <div class="planet-info-name">Mars</div>
+                <div class="planet-info-g">g = 3.7 m/s²</div>
+              </div>
+            </button>
+            <button class="planet-card-btn" data-g="0.0">
+              <span class="planet-emoji">✨</span>
+              <div>
+                <div class="planet-info-name">Space</div>
+                <div class="planet-info-g">Zero-G (0.0)</div>
+              </div>
+            </button>
+          </div>
+          <div id="weightFormulaNote" class="weight-formula-note">
+            💡 On Earth: Weight W = 3,000 kg × 9.8 m/s² = <b>29,400 N</b>
+          </div>
+          <!-- Hidden gravity slider for backward compatibility -->
+          <input type="range" id="slGravity" min="0" max="20" step="0.1" value="9.8" style="display:none;">
+        </div>
+
+        <!-- CARD 5: LIVE FLIGHT TELEMETRY (15–30s Cycle) -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <h2 class="control-card-title"><span>⏱️</span> Flight Telemetry (15–30s Cycle)</h2>
+            <span id="hudEnv" style="font-size:12px; color:var(--text-muted); font-weight:600;">Earth (9.8 m/s²)</span>
+          </div>
+          <div class="flight-gauges-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="gauge-box">
+              <div class="gauge-label">Time</div>
+              <div id="gaugeTime" class="gauge-val" style="color:var(--text-muted);">0.0 s</div>
+            </div>
+            <div class="gauge-box">
+              <div class="gauge-label">Altitude</div>
+              <div id="gaugeAlt" class="gauge-val">0 m</div>
+            </div>
+            <div class="gauge-box">
+              <div class="gauge-label">Velocity</div>
+              <div id="gaugeSpeed" class="gauge-val">0 m/s</div>
+            </div>
+            <div class="gauge-box">
+              <div class="gauge-label">Acceleration</div>
+              <div id="gaugeAccel" class="gauge-val">0 m/s²</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. ADVANCED DATA & GRAPHS VIEW (Secondary) -->
+  <!-- ========================================== -->
+  <div id="advancedLabView" class="advanced-view-container">
+    
+    <div class="graph-card">
+      <div class="graph-card-header">
+        <div>
+          <h2 style="margin:0; font-size:18px; font-weight:800; color:var(--text-main);">📈 Real-Time Multi-Trace Graphs</h2>
+          <p style="margin:4px 0 0 0; font-size:13px; color:var(--text-muted);">
+            Observe Velocity v(t), Acceleration a(t), and Height y(t) plotted simultaneously against time.
+          </p>
+        </div>
+        <button id="exportCsvBtn" class="export-csv-btn">
+          <span>💾</span> Export Data to CSV
+        </button>
+      </div>
+
+      <!-- Graph Canvas -->
+      <div class="graph-container">
+        <canvas id="graphCanvas"></canvas>
+      </div>
+
+      <!-- Peak Stats Badge Row -->
+      <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:16px; padding:12px 16px; background:#f8fafc; border-radius:12px; border:1px solid #e2e8f0;">
+        <span id="peakVel" style="font-size:13px; font-weight:700; color:#0284c7;">Peak v: 0.0 m/s</span>
+        <span id="peakAccel" style="font-size:13px; font-weight:700; color:#7c3aed;">Peak a: 0.0 m/s²</span>
+        <span id="peakAlt" style="font-size:13px; font-weight:700; color:#d97706;">Max Alt: 0 m</span>
+      </div>
+    </div>
+
+    <!-- Advanced Controls & Atmospheric Explorer -->
+    <div class="two-col-grid">
+      <!-- Atmospheric Layers -->
+      <div class="control-card">
+        <h3 style="margin:0 0 12px 0; font-size:15px; font-weight:800;">🌍 Earth Atmospheric Cross-Section</h3>
+        <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">
+          Click any layer below to focus the simulation camera on that atmospheric altitude:
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="btn-preset atmo-pill active" data-layer="crust">🪨 Crust (0m)</button>
+          <button class="btn-preset atmo-pill" data-layer="tropo">🌤️ Troposphere (0–12km)</button>
+          <button class="btn-preset atmo-pill" data-layer="strato">🎈 Stratosphere (12–50km)</button>
+          <button class="btn-preset atmo-pill" data-layer="meso">🌠 Mesosphere (50–85km)</button>
+          <button class="btn-preset atmo-pill" data-layer="thermo">🌌 Thermosphere (85–600km)</button>
+          <button class="btn-preset atmo-pill" data-layer="space">✨ Deep Space (&gt;600km)</button>
+        </div>
+      </div>
+
+      <!-- Crosswind & Trajectory Settings -->
+      <div class="control-card">
+        <h3 style="margin:0 0 12px 0; font-size:15px; font-weight:800;">🌬️ Side Crosswind &amp; Path Options</h3>
+        
+        <div style="margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:4px;">
+            <span>Crosswind Force</span>
+            <span id="outSide" style="font-family:var(--font-mono); color:var(--text-main);">0 N</span>
+          </div>
+          <input type="range" id="slSide" min="-20000" max="20000" step="1000" value="0" style="width:100%;">
+        </div>
+
+        <div>
+          <label style="font-size:13px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" id="chkTrail" checked> Show Parabolic Flight Trail on Canvas
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Hidden compatibility elements to support existing script selectors -->
+<div style="display:none;">
+  <span id="valVel"></span><span id="subVel"></span>
+  <span id="valAccel"></span><span id="subAccel"></span>
+  <span id="valNet"></span><span id="subNet"></span>
+  <span id="valWeight"></span><span id="subWeight"></span>
+  <span id="valMass"></span><span id="subFuel"></span>
+  <span id="hudLayer"></span><span id="hudAlt"></span>
+  <span id="hudSpeed"></span><span id="hudFnet"></span>
+  <span id="atmoConditionNote"></span>
+  <span id="outFuel"></span>
+  <div id="mathWalkthrough"></div>
+</div>
+
+<!-- Modular Physics Engine, Renderer, Graphs & Simulation Controllers -->
+<script src="js/state.js"></script>
+<script src="js/physics.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/graphs.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/simulation.js"></script>
+<script src="js/landing.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
