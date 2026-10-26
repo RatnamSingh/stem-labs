@@ -88,7 +88,7 @@ const FEATURED = [
     description: "Explore how light bends, splits and forms a spectrum.",
     image: IMAGES.prism,
     icon: "light",
-    search: ["prism"],
+    path: "/Labs/Physics/prism_simulation/simulation.html",
     note: "Try changing the angle →",
   },
   {
@@ -97,7 +97,7 @@ const FEATURED = [
     description: "See how conditions can change the speed of a reaction.",
     image: IMAGES.purpleFlask,
     icon: "flask",
-    search: ["kinetics", "reaction rate"],
+    path: "/Labs/Chemistry/kinetics_simulation/simulation.html",
     note: "What happens if you change it?",
   },
   {
@@ -106,7 +106,7 @@ const FEATURED = [
     description: "Take a closer look at the tiny structures that make life work.",
     image: IMAGES.cells,
     icon: "microscope",
-    search: ["microscope", "cell"],
+    path: "/Labs/Biology/microscope_simulation/simulation.html",
     note: "Zoom in and explore →",
   },
   {
@@ -115,7 +115,7 @@ const FEATURED = [
     description: "Investigate collisions and the transfer of motion.",
     image: IMAGES.cradle,
     icon: "motion",
-    search: ["momentum", "roller coaster"],
+    path: "/Labs/Physics/roller_coaster_simulation/simulation.html",
     note: "Predict what happens!",
   },
 ];
@@ -804,25 +804,31 @@ function SubjectCard({ item }) {
 ========================================== */
 
 function FeaturedExperiment({ item, index }) {
-  const href = findLabPath(item.search);
-
   return (
-    <article className={`featured-card featured-card-${index + 1}`}>
+    <a
+      href={item.path}
+      className={`featured-card featured-card-${index + 1}`}
+      aria-label={`Open ${item.title} lab`}
+    >
       <div className="featured-photo">
         <img src={item.image} alt="" loading="lazy" />
-        <span className="featured-subject-tag">{item.subject.toUpperCase()}</span>
-        <span className="featured-photo-number">0{index + 1}</span>
+        <span className="featured-subject-tag">
+          {item.subject.toUpperCase()}
+        </span>
+        <span className="featured-photo-number">
+          0{index + 1}
+        </span>
       </div>
 
       <div className="featured-card-copy">
         <h3>{item.title}</h3>
         <p>{item.description}</p>
         <span className="featured-handwritten">{item.note}</span>
-        <Link to={href} className="featured-arrow" aria-label={`Explore ${item.title}`}>
+        <span className="featured-arrow" aria-hidden="true">
           ↗
-        </Link>
+        </span>
       </div>
-    </article>
+    </a>
   );
 }
 
