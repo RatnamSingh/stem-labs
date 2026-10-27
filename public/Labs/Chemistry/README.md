@@ -69,6 +69,31 @@ A collection of interactive, client-side STEM chemistry simulations built with H
 - **Colloidal Sulfur Turbidity**: Photometric light attenuation obscuring the black cross mark beneath the reaction flask.
 - **Rate Order & Arrhenius Activation Energy**: Rate $= k[\text{Na}_2\text{S}_2\text{O}_3]^m[\text{HCl}]^n$ and linear Arrhenius plot $\ln(k)$ vs $1/T$ giving $E_a$.
 
+### 13. 🌿 [Paper Chromatography & Plant Pigments Virtual Lab (`/chromatography_simulation`)](chromatography_simulation/)
+- **Washburn Capillary Dynamics & Partition**: Dynamic solvent front migration ($h(t) \propto \sqrt{t}$) through Whatman No. 1 cellulose fibers in an airtight sealed chamber.
+- **Chloroplast Pigment Separation**: Complete chromatographic resolution of Spinach extract into $\beta$-Carotene ($R_f \approx 0.94$), Xanthophyll ($R_f \approx 0.72$), Chlorophyll $a$ ($R_f \approx 0.58$), and Chlorophyll $b$ ($R_f \approx 0.42$).
+- **Synthetic Black Ink Resolution**: Resolves black marker dye into Cyan ($R_f \approx 0.82$), Magenta ($R_f \approx 0.54$), and Tartrazine Yellow ($R_f \approx 0.28$).
+- **Interactive Metric $R_f$ Ruler**: Draggable metric ruler measuring solute migration vs solvent front with real-time $R_f = d_{\text{solute}} / d_{\text{solvent}}$ calculation and procedural Web Audio droplet sound FX.
+
+### 14. ⚗️ [Redox Titration & Permanganometry Virtual Lab (`/redox_titration_simulation`)](redox_titration_simulation/)
+- **Self-Indicating Permanganometry**: Standard $0.02\text{ M } \text{KMnO}_4$ reducing to colorless $\text{Mn}^{2+}$ in acidic medium, with sharp permanent faint pink equivalence detection.
+- **Primary Standards**: Titration of Mohr's Salt ($5\text{Fe}^{2+} + \text{MnO}_4^- + 8\text{H}^+ \to 5\text{Fe}^{3+} + \text{Mn}^{2+} + 4\text{H}_2\text{O}$) and Oxalic Acid with thermal water bath kinetics ($60\text{–}70^\circ\text{C}$).
+- **Laboratory Bench Apparatus**: $50\text{ mL}$ glass burette with dark upper meniscus reading, working stopcock, and magnetic stirrer hotplate with spinning Teflon bar and liquid vortex.
+- **Live Potentiometric Redox Curve**: Real-time Nernst cell potential ($E_{\text{cell}}$ vs. $V_{\text{titrant}}$) graph tracking sigmoidal inflection at equivalence ($V_{\text{eq}}$).
+
+### 15. ⚡ [Galvanic Daniell Cell & Nernst Equation Virtual Lab (`/daniell_cell_simulation`)](daniell_cell_simulation/)
+- **Electrochemical Couple & Nernst Law**: $\text{Zn}(s) | \text{Zn}^{2+}(aq) \parallel \text{Cu}^{2+}(aq) | \text{Cu}(s)$ with live Nernst equation $E_{\text{cell}} = E^\circ - \frac{0.0591}{2}\log_{10}([\text{Zn}^{2+}]/[\text{Cu}^{2+}])$ and Gibbs free energy $\Delta G$.
+- **Draggable Salt Bridge**: U-tube filled with $\text{KCl}$ in agar-agar jelly; removing the bridge demonstrates immediate open-circuit drop to $0.000\text{ V}$.
+- **Microscopic Electron Drift**: Animated electron transport along external copper wire to LED voltmeter, coupled with $\text{K}^+$ and $\text{Cl}^-$ ion migration through the salt bridge.
+- **Faraday Mass Kinetics**: Live tracking of anodic zinc dissolution and cathodic copper deposition mass balance.
+
+### 16. ⚖️ [Chemical Equilibrium & Le Chatelier's Principle Virtual Lab (`/le_chatelier_simulation`)](le_chatelier_simulation/)
+- **Two Reversible Equilibrium Systems**:
+  - Iron(III) Thiocyanate: $\text{Fe}^{3+} + \text{SCN}^- \rightleftharpoons [\text{Fe(SCN)}]^{2+}$ (blood red forward shift vs yellow reverse shift).
+  - Cobalt(II) Hexaaqua / Tetrachloro: $[\text{Co(H}_2\text{O})_6]^{2+} + 4\text{Cl}^- \rightleftharpoons [\text{CoCl}_4]^{2-} + 6\text{H}_2\text{O}$ (endothermic blue forward shift vs pink reverse shift).
+- **Perturbation Testing**: Interactive addition of $\text{FeCl}_3$, $\text{KSCN}$, Oxalic acid (complexation), $\text{AgNO}_3$ (precipitation), $\text{HCl}$, and hot ($80^\circ\text{C}$) / ice ($0^\circ\text{C}$) immersion baths.
+- **4-Tube Laboratory Rack & Spectrophotometer**: Side-by-side comparison with reference standard tube, live laser absorption beam, and optical absorbance/transmittance readouts.
+
 ---
 
 ## 🚀 Running Locally
@@ -118,5 +143,21 @@ python -m http.server 8107
 # Chemical Kinetics
 cd kinetics_simulation
 python -m http.server 8108
+
+# Paper Chromatography
+cd chromatography_simulation
+python -m http.server 8109
+
+# Redox Titration
+cd redox_titration_simulation
+python -m http.server 8110
+
+# Daniell Galvanic Cell
+cd daniell_cell_simulation
+python -m http.server 8111
+
+# Le Chatelier Equilibrium
+cd le_chatelier_simulation
+python -m http.server 8112
 ```
 Or simply open the `index.html` file in any modern web browser.

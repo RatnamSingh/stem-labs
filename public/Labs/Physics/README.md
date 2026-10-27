@@ -76,6 +76,21 @@ A collection of interactive, client-side STEM physics simulations built with HTM
 - **Coulomb Electrostatic Repulsion**: Hyperbolic scattering trajectory computation governed by $F = \frac{1}{4\pi\varepsilon_0}\frac{(2e)(Ze)}{r^2}$.
 - **Differential Cross-Section**: Impact parameter ($b$) correlation with scattering angle $\theta$, explaining why 1 in 8000 alpha particles rebound at angles $> 90^\circ$ to establish the atomic nucleus.
 
+### 13. 📏 [Meter Bridge & Specific Resistance Simulator (`/meter_bridge_simulation`)](meter_bridge_simulation/)
+- **Slide-Wire Wheatstone Bridge**: $100\text{ cm}$ manganin/constantan resistance wire with uniform cross-section and copper strip connections.
+- **Null Point Determination**: Sliding contact jockey with sensitive galvanometer deflection detecting balance point ($l_1$) where $\frac{P}{Q} = \frac{R}{S}$.
+- **Unknown Resistance & Resistivity**: Real-time calculation of unknown wire resistance $X = \frac{R(100 - l)}{l}$ and specific resistivity $\rho = \frac{\pi r^2 X}{L}$.
+
+### 14. 🔋 [Potentiometer EMF Comparison & Internal Resistance Simulator (`/potentiometer_simulation`)](potentiometer_simulation/)
+- **400 cm Multi-Wire Potentiometer**: 4 parallel $100\text{ cm}$ wire segments connected with low-resistance copper terminal blocks.
+- **Primary Cell EMF Comparison**: Quantitative balance lengths for Leclanché and Daniell cells yielding $\frac{E_1}{E_2} = \frac{l_1}{l_2}$.
+- **Internal Resistance Measurement**: Plug-key resistance box shunting the test cell to evaluate internal resistance $r = R\left(\frac{l_1 - l_2}{l_2}\right)$.
+
+### 15. 🌈 [Single-Slit Fraunhofer Diffraction Simulator (`/diffraction_simulation`)](diffraction_simulation/)
+- **Wave Optics Sinc-Squared Profile**: Analytical irradiance distribution $I(\theta) = I_0 \left(\frac{\sin \beta}{\beta}\right)^2$ with $\beta = \frac{\pi a \sin\theta}{\lambda}$.
+- **Tunable Laser Diodes**: Switchable wavelengths: Red ($650\text{ nm}$), Yellow Sodium ($589\text{ nm}$), Green ($532\text{ nm}$), and Blue ($405\text{ nm}$).
+- **Bench Metrology**: Interactive slit width ($a$) and screen distance ($D$) verifying central fringe width $W_0 = \frac{2\lambda D}{a}$ with movable photometer wand.
+
 ---
 
 ## 💻 Tech Stack
