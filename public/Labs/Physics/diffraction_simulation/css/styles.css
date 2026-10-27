@@ -80,6 +80,20 @@ main.app-container {
   }
 }
 
+@media (max-width: 480px) {
+  main.app-container {
+    padding: 10px;
+  }
+  .canvas-wrapper {
+    min-height: 300px;
+  }
+  .app-header {
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
 .canvas-section {
   display: flex;
   flex-direction: column;

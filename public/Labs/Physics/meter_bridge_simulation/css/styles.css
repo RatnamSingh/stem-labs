@@ -81,6 +81,22 @@ main.app-container {
     grid-template-columns: 1fr;
     overflow-y: auto;
   }
+  .canvas-section {
+    min-height: 400px;
+    height: auto;
+  }
+  .canvas-wrapper {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .canvas-section {
+    min-height: 300px;
+  }
+  .canvas-wrapper {
+    min-height: 260px;
+  }
 }
 
 .canvas-section {
