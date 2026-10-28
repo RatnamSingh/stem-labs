@@ -1,3 +1,4 @@
+
 name: Labs CI/CD
 
 on:
@@ -21,6 +22,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Verify deployment files
+        run: |
+          test -f Dockerfile
+          test -f nginx.conf
+          test -f docker-compose.yml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -55,10 +62,9 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: docker.compose.yml
+          source: docker-compose.yml
           target: /root/labs/
           overwrite: true
-          strip_components: 0
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.2.0
@@ -80,9 +86,9 @@ jobs:
 
             export GHCR_IMAGE
 
-            docker compose -f docker.compose.yml config -q
-            docker compose -f docker.compose.yml pull
-            docker compose -f docker.compose.yml up -d --remove-orphans
+            docker compose -f docker-compose.yml config -q
+            docker compose -f docker-compose.yml pull
+            docker compose -f docker-compose.yml up -d --remove-orphans
 
             for i in $(seq 1 30); do
               if [ "$(docker inspect --format='{{.State.Health.Status}}' labs-frontend 2>/dev/null || true)" = "healthy" ]; then
@@ -92,6 +98,6 @@ jobs:
               sleep 2
             done
 
-            docker compose -f docker.compose.yml ps
+            docker compose -f docker-compose.yml ps
             docker logs --tail 100 labs-frontend
             exit 1
