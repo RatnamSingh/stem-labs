@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STEM Labs Directory — LABS by Carawin</title>
+  <meta name="description" content="Explore our complete library of 50+ interactive STEM simulations across Physics, Chemistry, Biology, and Mathematics for Classes 9 to 12.">
+  <link rel="icon" type="image/png" href="./assets/logo.png">
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, Caveat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/sections.css">
+  <link rel="stylesheet" href="./css/labs.css">
+</head>
+<body class="labs-page">
+
+  <!-- ==========================================================
+       1. STICKY NAVBAR
+       ========================================================== -->
+  <header class="site-header labs-header" id="site-header">
+    <div class="container">
+      <nav class="navbar" aria-label="Labs Navigation">
+        <div class="labs-nav-left">
+          <a href="./index.html" class="navbar-brand" aria-label="LABS by Carawin Home">
+            <img src="./assets/logo.png" alt="LABS by Carawin" class="brand-logo" width="160" height="48">
+          </a>
+          <a href="./index.html" class="back-to-home-link">
+            <span>←</span>
+            <span>Back to Overview</span>
+          </a>
+        </div>
+
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="./index.html#subjects" class="nav-link">Subjects</a></li>
+          <li><a href="./labs.html" class="nav-link active">All Labs</a></li>
+          <li><a href="./index.html#how-it-works" class="nav-link">How it works</a></li>
+          <li><a href="./index.html#for-schools" class="nav-link">For Schools</a></li>
+        </ul>
+
+        <div class="navbar-actions">
+          <a href="./index.html" class="btn btn-outline-white" style="padding: 8px 18px; font-size: 0.88rem;">
+            <span>Home Page</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================
+         2. DIRECTORY HERO SECTION
+         ========================================================== -->
+    <section class="directory-hero">
+      <div class="container">
+        <div class="directory-eyebrow">CURRICULUM MAPPED STEM SIMULATIONS</div>
+        <h1 class="directory-title">
+          Explore Interactive <span class="text-crimson">Labs</span><span class="text-yellow">.</span>
+        </h1>
+        <p class="directory-subtitle">
+          Hands-on virtual experiments across Physics, Chemistry, Biology, and Mathematics designed for CBSE &amp; ICSE Classes 9–12.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         3. CONTROLS BAR: SEARCH & FILTERS
+         ========================================================== -->
+    <section class="directory-controls">
+      <div class="container">
+        <div class="controls-grid">
+          <!-- Search Box -->
+          <div class="search-box-wrapper">
+            <svg class="search-icon-inside" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search experiments by name, topic or concept..." aria-label="Search experiments">
+            <button id="searchClearBtn" class="search-clear-btn" aria-label="Clear search" title="Clear">&times;</button>
+          </div>
+
+          <!-- Subject Tabs & Class Filters -->
+          <div class="filter-tabs-wrapper">
+            <!-- Subject Tabs -->
+            <div class="subject-tabs" id="subjectTabs" role="tablist" aria-label="Filter by subject">
+              <button class="subject-tab active" data-subject="All" role="tab" aria-selected="true">
+                <span>All</span>
+                <span class="tab-count" id="countAll">50</span>
+              </button>
+              <button class="subject-tab" data-subject="Physics" role="tab" aria-selected="false">
+                <span>⚡ Physics</span>
+                <span class="tab-count" id="countPhysics">21</span>
+              </button>
+              <button class="subject-tab" data-subject="Chemistry" role="tab" aria-selected="false">
+                <span>🧪 Chemistry</span>
+                <span class="tab-count" id="countChemistry">21</span>
+              </button>
+              <button class="subject-tab" data-subject="Biology" role="tab" aria-selected="false">
+                <span>🔬 Biology</span>
+                <span class="tab-count" id="countBiology">8</span>
+              </button>
+            </div>
+
+            <!-- Class Chips -->
+            <div class="class-chips" id="classChips" role="radiogroup" aria-label="Filter by class">
+              <button class="class-chip active" data-class="All" role="radio" aria-checked="true">All Classes</button>
+              <button class="class-chip" data-class="9" role="radio" aria-checked="false">Class 9</button>
+              <button class="class-chip" data-class="10" role="radio" aria-checked="false">Class 10</button>
+              <button class="class-chip" data-class="11" role="radio" aria-checked="false">Class 11</button>
+              <button class="class-chip" data-class="12" role="radio" aria-checked="false">Class 12</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Row: Active Filter Summary & Reset -->
+        <div class="results-status-bar">
+          <div class="status-counter" id="statusCounter">
+            Showing <strong>53</strong> of <strong>53</strong> experiments
+          </div>
+          <button id="resetFiltersBtn" class="reset-filters-btn">
+            ↺ Reset all filters
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         4. EXPERIMENT GRID SECTION
+         ========================================================== -->
+    <section class="directory-grid-section">
+      <div class="container">
+        <div class="experiments-grid" id="experimentsGrid">
+          <!-- Dynamically populated via JS from experiments.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================
+       5. FULLSCREEN LAB MODAL RUNNER
+       ========================================================== -->
+  <div class="lab-modal-overlay" id="labModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lab-modal-bar">
+      <div class="lab-modal-title">
+        <span id="modalSubjectIcon">🧪</span>
+        <span id="modalLabTitle">Experiment Simulation</span>
+      </div>
+      <div class="lab-modal-actions">
+        <a id="modalNewTabBtn" href="#" target="_blank" rel="noopener noreferrer" class="modal-action-btn" title="Open in new window">
+          <span>Open Fullscreen</span>
+          <span>↗</span>
+        </a>
+        <button id="modalReloadBtn" class="modal-action-btn" title="Restart simulation">
+          <span>Reload</span>
+          <span>↻</span>
+        </button>
+        <button id="modalCloseBtn" class="modal-close-btn" title="Exit simulation">
+          <span>Exit Lab &times;</span>
+        </button>
+      </div>
+    </div>
+    <div class="lab-iframe-wrapper">
+      <iframe id="labIframe" class="lab-iframe" title="Interactive Simulation Sandbox" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <!-- JavaScript: Data and Logic -->
+  <script type="module">
+    import experiments from './js/data/experiments.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Elements
+      const grid = document.getElementById('experimentsGrid');
+      const searchInput = document.getElementById('searchInput');
+      const searchClearBtn = document.getElementById('searchClearBtn');
+      const subjectTabs = document.querySelectorAll('.subject-tab');
+      const classChips = document.querySelectorAll('.class-chip');
+      const statusCounter = document.getElementById('statusCounter');
+      const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+
+      // Modal elements
+      const labModal = document.getElementById('labModal');
+      const labIframe = document.getElementById('labIframe');
+      const modalLabTitle = document.getElementById('modalLabTitle');
+      const modalSubjectIcon = document.getElementById('modalSubjectIcon');
+      const modalNewTabBtn = document.getElementById('modalNewTabBtn');
+      const modalReloadBtn = document.getElementById('modalReloadBtn');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+      // State
+      let currentSubject = 'All';
+      let currentClass = 'All';
+      let searchQuery = '';
+
+      // Update subject count badges
+      const counts = {
+        All: experiments.length,
+        Physics: experiments.filter(e => e.subject === 'Physics').length,
+        Chemistry: experiments.filter(e => e.subject === 'Chemistry').length,
+        Biology: experiments.filter(e => e.subject === 'Biology').length,
+      };
+
+      document.getElementById('countAll').textContent = counts.All;
+      document.getElementById('countPhysics').textContent = counts.Physics;
+      document.getElementById('countChemistry').textContent = counts.Chemistry;
+      document.getElementById('countBiology').textContent = counts.Biology;
+
+      // Handle Query Parameters from URL
+      function parseUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        const subjectParam = params.get('subject');
+        const classParam = params.get('class');
+        const searchParam = params.get('search');
+        const focusParam = params.get('focus');
+
+        if (subjectParam && ['Physics', 'Chemistry', 'Biology'].includes(subjectParam)) {
+          currentSubject = subjectParam;
+          subjectTabs.forEach(t => {
+            const isTarget = t.dataset.subject === subjectParam;
+            t.classList.toggle('active', isTarget);
+            t.setAttribute('aria-selected', isTarget);
+          });
+        }
+
+        if (classParam && ['9', '10', '11', '12'].includes(classParam)) {
+          currentClass = classParam;
+          classChips.forEach(c => {
+            const isTarget = c.dataset.class === classParam;
+            c.classList.toggle('active', isTarget);
+            c.setAttribute('aria-checked', isTarget);
+          });
+        }
+
+        if (searchParam) {
+          searchQuery = searchParam;
+          searchInput.value = searchParam;
+          searchClearBtn.classList.add('is-visible');
+        }
+
+        if (focusParam === 'search') {
+          setTimeout(() => searchInput.focus(), 100);
+        }
+      }
+
+      // Render Experiments
+      function renderExperiments() {
+        const filtered = experiments.filter(exp => {
+          // Subject filter
+          if (currentSubject !== 'All' && exp.subject !== currentSubject) {
+            return false;
+          }
+
+          // Class filter
+          if (currentClass !== 'All') {
+            const targetClass = parseInt(currentClass, 10);
+            if (!Array.isArray(exp.classes) || !exp.classes.includes(targetClass)) {
+              return false;
+            }
+          }
+
+          // Search query filter
+          if (searchQuery.trim() !== '') {
+            const q = searchQuery.toLowerCase().trim();
+            const titleMatch = (exp.title || '').toLowerCase().includes(q);
+            const descMatch = (exp.description || '').toLowerCase().includes(q);
+            const subjMatch = (exp.subject || '').toLowerCase().includes(q);
+            if (!titleMatch && !descMatch && !subjMatch) {
+              return false;
+            }
+          }
+
+          return true;
+        });
+
+        // Update status counter
+        statusCounter.innerHTML = `Showing <strong>${filtered.length}</strong> of <strong>${experiments.length}</strong> experiments`;
+
+        // Toggle reset button visibility
+        const isFiltered = currentSubject !== 'All' || currentClass !== 'All' || searchQuery.trim() !== '';
+        resetFiltersBtn.classList.toggle('is-visible', isFiltered);
+
+        if (filtered.length === 0) {
+          grid.innerHTML = `
+            <div class="empty-directory">
+              <span class="empty-icon">🔍</span>
+              <h3 class="empty-title">No matching experiments found</h3>
+              <p class="empty-desc">We couldn't find any simulations matching "${searchQuery || currentSubject || 'current filters'}". Try adjusting your search or subject filter.</p>
+              <button class="btn btn-crimson" id="btnEmptyReset">Reset Filters & Show All</button>
+            </div>
+          `;
+          document.getElementById('btnEmptyReset')?.addEventListener('click', resetAllFilters);
+          return;
+        }
+
+        grid.innerHTML = filtered.map(exp => {
+          const subKey = (exp.subject || '').toLowerCase();
+          const classesStr = Array.isArray(exp.classes) ? (exp.classes.length > 1 ? `Classes ${exp.classes.join(', ')}` : `Class ${exp.classes[0]}`) : 'All Classes';
+          
+          let icon = '⚡';
+          if (subKey === 'chemistry') icon = '🧪';
+          if (subKey === 'biology') icon = '🔬';
+          if (subKey === 'mathematics') icon = '📐';
+
+          return `
+            <article class="experiment-card" data-path="${exp.path}">
+              <div>
+                <div class="card-top-meta">
+                  <span class="badge-subject ${subKey}">
+                    <span>${icon}</span>
+                    <span>${exp.subject}</span>
+                  </span>
+                  <span class="badge-class">${classesStr}</span>
+                </div>
+                <h3 class="card-title">${exp.title}</h3>
+                <p class="card-description">${exp.description}</p>
+              </div>
+
+              <div class="card-footer-row">
+                <a href="${exp.path}" class="btn-launch-lab" data-path="${exp.path}" data-title="${exp.title}" data-icon="${icon}">
+                  <span>Launch Lab</span>
+                  <span>→</span>
+                </a>
+                <button type="button" class="btn-modal-preview" data-path="${exp.path}" data-title="${exp.title}" data-icon="${icon}" title="Preview in overlay">
+                  Quick View ↗
+                </button>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        // Attach modal preview listeners
+        document.querySelectorAll('.btn-modal-preview').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openLabModal(btn.dataset.path, btn.dataset.title, btn.dataset.icon);
+          });
+        });
+      }
+
+      // Modal Handlers
+      function openLabModal(path, title, icon) {
+        modalLabTitle.textContent = title;
+        modalSubjectIcon.textContent = icon;
+        modalNewTabBtn.href = path;
+        labIframe.src = path;
+        labModal.classList.add('is-open');
+        labModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLabModal() {
+        labModal.classList.remove('is-open');
+        labModal.setAttribute('aria-hidden', 'true');
+        labIframe.src = 'about:blank';
+        document.body.style.overflow = '';
+      }
+
+      modalCloseBtn.addEventListener('click', closeLabModal);
+      modalReloadBtn.addEventListener('click', () => {
+        if (labIframe.src && labIframe.src !== 'about:blank') {
+          labIframe.contentWindow?.location.reload();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && labModal.classList.contains('is-open')) {
+          closeLabModal();
+        }
+      });
+
+      // Filter Interactions
+      subjectTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          subjectTabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          currentSubject = tab.dataset.subject;
+          updateUrl();
+          renderExperiments();
+        });
+      });
+
+      classChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          classChips.forEach(c => {
+            c.classList.remove('active');
+            c.setAttribute('aria-checked', 'false');
+          });
+          chip.classList.add('active');
+          chip.setAttribute('aria-checked', 'true');
+          currentClass = chip.dataset.class;
+          updateUrl();
+          renderExperiments();
+        });
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        searchClearBtn.classList.toggle('is-visible', searchQuery.length > 0);
+        updateUrl();
+        renderExperiments();
+      });
+
+      searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        searchClearBtn.classList.remove('is-visible');
+        searchInput.focus();
+        updateUrl();
+        renderExperiments();
+      });
+
+      function resetAllFilters() {
+        currentSubject = 'All';
+        currentClass = 'All';
+        searchQuery = '';
+        searchInput.value = '';
+        searchClearBtn.classList.remove('is-visible');
+
+        subjectTabs.forEach(t => {
+          const isAll = t.dataset.subject === 'All';
+          t.classList.toggle('active', isAll);
+          t.setAttribute('aria-selected', isAll);
+        });
+
+        classChips.forEach(c => {
+          const isAll = c.dataset.class === 'All';
+          c.classList.toggle('active', isAll);
+          c.setAttribute('aria-checked', isAll);
+        });
+
+        updateUrl();
+        renderExperiments();
+      }
+
+      resetFiltersBtn.addEventListener('click', resetAllFilters);
+
+      function updateUrl() {
+        const params = new URLSearchParams();
+        if (currentSubject !== 'All') params.set('subject', currentSubject);
+        if (currentClass !== 'All') params.set('class', currentClass);
+        if (searchQuery.trim() !== '') params.set('search', searchQuery.trim());
+
+        const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+        window.history.replaceState({}, '', newUrl);
+      }
+
+      // Initialize
+      parseUrlParams();
+      renderExperiments();
+    });
+  </script>
+</body>
+</html>

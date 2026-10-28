@@ -1,0 +1,60 @@
+:root {
+  /* Brand Colors */
+  --blue-oxford: #002147;
+  --blue-darkest: #001530;
+  --blue-deep: #001c3d;
+  --blue-surface: #032b5a;
+  --blue-overlay: rgba(0, 33, 71, 0.85);
+
+  --crimson: #DC143C;
+  --crimson-hover: #b80f31;
+  --crimson-glow: rgba(220, 20, 60, 0.28);
+  --crimson-subtle: rgba(220, 20, 60, 0.08);
+
+  --yellow: #FFC20E;
+  --yellow-hover: #e5ad07;
+  --yellow-glow: rgba(255, 194, 14, 0.3);
+  --yellow-subtle: rgba(255, 194, 14, 0.12);
+
+  /* Neutrals */
+  --white: #FFFFFF;
+  --grey-50: #F8FAFC;
+  --grey-100: #F1F5F9;
+  --grey-200: #E2E8F0;
+  --grey-300: #CBD5E1;
+  --grey-400: #94A3B8;
+  --grey-500: #64748B;
+  --grey-600: #475569;
+  --grey-700: #334155;
+  --grey-800: #1E293B;
+  --grey-900: #0F172A;
+
+  /* Typography */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-handwriting: 'Caveat', cursive, sans-serif;
+
+  /* Spacing */
+  --container-max: 1240px;
+  --container-pad: 24px;
+  --section-pad-y: 96px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 33, 71, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 33, 71, 0.08);
+  --shadow-lg: 0 16px 40px rgba(0, 33, 71, 0.12);
+  --shadow-xl: 0 24px 60px rgba(0, 33, 71, 0.18);
+  --shadow-crimson: 0 10px 30px rgba(220, 20, 60, 0.35);
+
+  /* Borders & Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
