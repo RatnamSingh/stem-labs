@@ -1,0 +1,173 @@
+/* Layout & Utility Styles */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+.section {
+  position: relative;
+  padding-top: var(--section-pad-y);
+  padding-bottom: var(--section-pad-y);
+}
+
+.section-tight {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+/* Color theme sections */
+.bg-white {
+  background-color: var(--white);
+}
+
+.bg-light {
+  background-color: var(--grey-50);
+}
+
+.bg-dark {
+  background-color: var(--blue-oxford);
+  color: var(--grey-300);
+}
+
+.bg-dark h1,
+.bg-dark h2,
+.bg-dark h3,
+.bg-dark h4 {
+  color: var(--white);
+}
+
+.bg-darkest {
+  background-color: var(--blue-darkest);
+  color: var(--grey-400);
+}
+
+/* Eyebrows / Section Labels */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+
+.eyebrow-yellow {
+  color: var(--yellow);
+}
+
+.eyebrow-crimson {
+  color: var(--crimson);
+}
+
+/* Typography Accents */
+.text-crimson {
+  color: var(--crimson) !important;
+}
+
+.text-yellow {
+  color: var(--yellow) !important;
+}
+
+.text-blue {
+  color: var(--blue-oxford) !important;
+}
+
+.text-white {
+  color: var(--white) !important;
+}
+
+.dot {
+  display: inline-block;
+}
+
+/* Handwritten annotation callouts */
+.handwritten {
+  font-family: var(--font-handwriting);
+  font-size: 1.35rem;
+  line-height: 1.15;
+  color: var(--grey-800);
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.handwritten.on-dark {
+  color: #E2E8F0;
+}
+
+.handwritten-arrow {
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+}
+
+/* Wavy SVG Section Transitions */
+.wave-divider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.wave-divider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 70px;
+}
+
+.wave-divider.wave-top {
+  margin-bottom: -1px;
+}
+
+.wave-divider.wave-bottom {
+  margin-top: -1px;
+}
+
+/* Flex / Grid Helpers */
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+}
+
+/* Visibility / Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
