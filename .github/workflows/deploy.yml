@@ -1,4 +1,3 @@
-
 name: Labs CI/CD
 
 on:
@@ -16,45 +15,98 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build-and-push:
+    name: Build and Push Labs Image
     runs-on: ubuntu-latest
+
+    outputs:
+      image_tag: ${{ steps.meta.outputs.image_tag }}
+      image_name: ${{ steps.meta.outputs.image_name }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Verify deployment files
+      - name: Validate deployment files
         run: |
+          set -e
           test -f Dockerfile
           test -f nginx.conf
           test -f docker-compose.yml
+          test -f package.json
+          test -f package-lock.json
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Prepare image name
-        id: image
+      - name: Set image metadata
+        id: meta
         shell: bash
-        run: echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "image_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          echo "image_name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
 
-      - name: Log in to GHCR
+      - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push image
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Labs image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ steps.image.outputs.name }}:latest
-            ${{ steps.image.outputs.name }}:${{ github.sha }}
+            ${{ steps.meta.outputs.image_name }}:${{ steps.meta.outputs.image_tag }}
+            ${{ steps.meta.outputs.image_name }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Image published
+        run: |
+          echo "Labs image published successfully."
+          echo "IMAGE=${{ steps.meta.outputs.image_name }}"
+          echo "IMAGE_TAG=${{ steps.meta.outputs.image_tag }}"
+
+  deploy:
+    name: Deploy Labs to VPS
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate deployment secrets
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+        run: |
+          set -e
+
+          test -n "$SERVER_HOST" || {
+            echo "::error::SERVER_HOST secret is missing"
+            exit 1
+          }
+
+          test -n "$SERVER_USER" || {
+            echo "::error::SERVER_USER secret is missing"
+            exit 1
+          }
+
+          test -n "$SERVER_SSH_KEY" || {
+            echo "::error::SERVER_SSH_KEY secret is missing"
+            exit 1
+          }
+
+          test -n "$GHCR_READ_TOKEN" || {
+            echo "::error::GHCR_READ_TOKEN secret is missing"
+            exit 1
+          }
+
+          echo "Deployment secrets are configured."
 
       - name: Copy Compose file to server
         uses: appleboy/scp-action@v0.1.7
@@ -66,38 +118,54 @@ jobs:
           target: /root/labs/
           overwrite: true
 
-      - name: Deploy on server
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.2.0
         env:
-          GHCR_IMAGE: ${{ steps.image.outputs.name }}:${{ github.sha }}
+          IMAGE_NAME: ${{ needs.build-and-push.outputs.image_name }}
+          IMAGE_TAG: ${{ needs.build-and-push.outputs.image_tag }}
           GHCR_USERNAME: ${{ github.repository_owner }}
           GHCR_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          envs: GHCR_IMAGE,GHCR_USERNAME,GHCR_TOKEN
+          envs: IMAGE_NAME,IMAGE_TAG,GHCR_USERNAME,GHCR_TOKEN
           script: |
             set -eu
+
             cd /root/labs
+
+            export GHCR_IMAGE="${IMAGE_NAME}:${IMAGE_TAG}"
+
+            echo "======================================"
+            echo "Deploying Labs"
+            echo "IMAGE=${GHCR_IMAGE}"
+            echo "======================================"
 
             echo "$GHCR_TOKEN" | docker login ghcr.io \
               -u "$GHCR_USERNAME" --password-stdin
 
-            export GHCR_IMAGE
-
+            echo "Validating Docker Compose configuration..."
             docker compose -f docker-compose.yml config -q
+
+            echo "Pulling Labs image..."
             docker compose -f docker-compose.yml pull
+
+            echo "Starting Labs..."
             docker compose -f docker-compose.yml up -d --remove-orphans
+
+            echo "Waiting for Labs health check..."
 
             for i in $(seq 1 30); do
               if [ "$(docker inspect --format='{{.State.Health.Status}}' labs-frontend 2>/dev/null || true)" = "healthy" ]; then
                 echo "Labs deployment is healthy."
+                docker compose -f docker-compose.yml ps
                 exit 0
               fi
               sleep 2
             done
 
+            echo "Labs deployment failed its health check."
             docker compose -f docker-compose.yml ps
             docker logs --tail 100 labs-frontend
             exit 1
