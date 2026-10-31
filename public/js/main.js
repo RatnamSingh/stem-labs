@@ -19,6 +19,21 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================================== */
 function initNavbar() {
   const navLinks = document.querySelectorAll('.nav-menu .nav-link');
+  const header = document.querySelector('.site-header');
+
+  // Handle header glass appearance on scroll
+  if (header) {
+    const handleHeaderScroll = () => {
+      if (window.pageYOffset > 30) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    };
+    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+    handleHeaderScroll();
+  }
+
   if (!navLinks.length) return;
 
   // Click Handler: Immediately set clicked item active (Bold + Yellow underline)
