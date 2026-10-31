@@ -147,7 +147,7 @@ function initHeroSimulation() {
       id: 'saturn',
       title: 'Gravity & Orbit Simulation',
       image: './assets/images/saturn_space.jpg',
-      labUrl: './Labs/Physics/projectile_motion_simulation/simulation.html',
+      labUrl: './Labs/Physics/projectile_simulation/simulation.html',
       badge: 'Physics · Gravitation',
       sliders: [
         { label: 'Mass', value: '5.2 × 10³⁰ kg', percent: 72, min: 1, max: 10, unit: ' × 10³⁰ kg' },
@@ -162,7 +162,7 @@ function initHeroSimulation() {
       id: 'earth',
       title: 'Atmospheric & Magnetic Field',
       image: './assets/images/thumb_earth.jpg',
-      labUrl: './Labs/Physics/ohms_law/simulation.html',
+      labUrl: './Labs/Physics/ohms_law_simulation/simulation.html',
       badge: 'Physics · Magnetism',
       sliders: [
         { label: 'Field Strength', value: '45.2 µT', percent: 55, min: 20, max: 70, unit: ' µT' },
@@ -192,7 +192,7 @@ function initHeroSimulation() {
       id: 'rocket',
       title: 'Propulsion & Velocity Trajectory',
       image: './assets/images/rocket_launch.jpg',
-      labUrl: './Labs/Physics/projectile_motion_simulation/simulation.html',
+      labUrl: './Labs/Physics/rocket_simulation/simulation.html',
       badge: 'Physics · Mechanics',
       sliders: [
         { label: 'Thrust Force', value: '7.6 MN', percent: 82, min: 2, max: 10, unit: ' MN' },
