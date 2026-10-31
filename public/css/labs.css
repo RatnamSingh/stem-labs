@@ -51,34 +51,42 @@
   transform: translateX(-2px);
 }
 
-/* Directory Hero */
+/* Directory Hero (Ed-Lens Dark Midnight Navy Theme) */
 .directory-hero {
-  padding: 104px 0 36px;
-  background: radial-gradient(circle at 85% 20%, rgba(220, 20, 60, 0.06) 0%, transparent 45%),
-              radial-gradient(circle at 15% 80%, rgba(255, 194, 14, 0.07) 0%, transparent 45%),
-              var(--white);
-  border-bottom: 1px solid var(--grey-200);
+  padding: 112px 0 44px;
+  background: 
+    radial-gradient(circle at 85% 25%, rgba(19, 42, 74, 0.9) 0%, transparent 55%),
+    radial-gradient(circle at 15% 85%, rgba(220, 20, 60, 0.14) 0%, transparent 40%),
+    var(--navy-dark);
+  color: var(--white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .directory-eyebrow {
-  color: var(--crimson);
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--amber-badge-bg);
+  color: var(--amber-badge-text);
+  padding: 4px 13px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  width: fit-content;
 }
 
 .directory-eyebrow::before {
   content: '';
   display: inline-block;
-  width: 20px;
-  height: 2.5px;
-  background-color: var(--yellow);
-  border-radius: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--amber-badge-dot);
 }
 
 .directory-title {
@@ -86,12 +94,12 @@
   font-size: 2.75rem;
   font-weight: 800;
   line-height: 1.15;
-  color: var(--blue-oxford);
+  color: var(--white);
   margin-bottom: 14px;
 }
 
 .directory-subtitle {
-  color: var(--grey-600);
+  color: #CBD5E1;
   font-size: 1.1rem;
   max-width: 680px;
   line-height: 1.6;

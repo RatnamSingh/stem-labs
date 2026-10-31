@@ -6,6 +6,17 @@
   --blue-surface: #032b5a;
   --blue-overlay: rgba(0, 33, 71, 0.85);
 
+  /* Ed-Lens Signature Dark Navy Surfaces */
+  --navy-dark: #081628;
+  --navy-surface: #0B192C;
+  --navy-deep: #071426;
+  --navy-darkest: #040C18;
+
+  /* Ed-Lens Amber Badge */
+  --amber-badge-bg: #FEF08A;
+  --amber-badge-text: #713F12;
+  --amber-badge-dot: #EAB308;
+
   --crimson: #DC143C;
   --crimson-hover: #b80f31;
   --crimson-glow: rgba(220, 20, 60, 0.28);

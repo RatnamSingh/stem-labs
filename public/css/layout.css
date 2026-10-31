@@ -45,34 +45,46 @@
   color: var(--grey-400);
 }
 
-/* Eyebrows / Section Labels */
+/* Eyebrows / Section Labels (Ed-Lens Signature Pill Badge) */
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 14px;
+  background: var(--amber-badge-bg);
+  color: var(--amber-badge-text);
+  padding: 4px 13px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  width: fit-content;
 }
 
 .eyebrow::before {
   content: '';
   display: inline-block;
-  width: 28px;
-  height: 3px;
-  border-radius: var(--radius-full);
-  background-color: currentColor;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--amber-badge-dot);
 }
 
 .eyebrow-yellow {
-  color: var(--yellow);
+  background: var(--amber-badge-bg);
+  color: var(--amber-badge-text);
 }
 
 .eyebrow-crimson {
-  color: var(--crimson);
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.eyebrow-crimson::before {
+  background-color: var(--crimson);
 }
 
 /* Typography Accents */
